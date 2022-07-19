@@ -60,5 +60,14 @@ const data = [
     value: 100,
     addCart: "Adicionar ao carrinho",
     tag: ["Camisetas"],
+  },{
+    id: 7,
+    img: "./img/tenis-q4.png",
+    nameItem: "Tênis Unissex Q4 Sports",
+    description:
+      "O tênis de basquete Millennium oferece suporte de alta qualidade com design leve para um desempenho lendário",
+    value: 458,
+    addCart: "Adicionar ao carrinho",
+    tag: ["Calçados"],
   },
 ];
