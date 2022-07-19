@@ -30,6 +30,7 @@ function createCards(){
         pDescCard.innerText = data[i].description;
         pPriceCard.innerText = `R$ ${data[i].value.toFixed(2)}`;
         addCarrinho.innerText = "Adicionar ao carrinho";
+        addCarrinho.value = i;
         divBodyCard.append(pTagCard, h3TitleCard, pDescCard, pPriceCard, addCarrinho);
 
         card.append(divImg, divBodyCard);
