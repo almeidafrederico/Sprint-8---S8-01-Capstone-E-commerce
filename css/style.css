@@ -200,6 +200,7 @@ img{
     line-height: 16px;
     color: #242424;
     border: white 1px solid;
+    border-radius: 4px;
     background: local;
 }
 
