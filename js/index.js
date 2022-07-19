@@ -1,8 +1,11 @@
-function reloadCards(tag){
+function reloadCards(tag, product){
     let cards = document.getElementById("cards");
     cards.innerText = "";
+    if(!product){
+        product = "";
+    }
     for(let i in data){
-        if(tag==data[i].tag[0] || !tag){
+        if(tag===data[i].tag[0] || !tag || product.toLowerCase()===data[i].nameItem.toLowerCase()){
             let card            = document.createElement("li");
             card.classList.add("card");
 
@@ -150,3 +153,17 @@ function addEventListenerNav (){
     });
 }
 addEventListenerNav();
+
+function addSearchNameItem (){
+    let search              = document.getElementById("search");
+    let searchName          = document.getElementById("searchName");
+
+    search.addEventListener("click", function(){
+        if(!searchName.value){
+            reloadCards();
+        }else{
+            reloadCards("#", searchName.value)
+        }
+    });
+}
+addSearchNameItem();
