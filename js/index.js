@@ -48,6 +48,24 @@ createCards();
 let shoppingCart        = document.getElementById("shoppingCart");
 let listShoppingCart = [];
 
+function reloadSummaryShoppingCart(){
+    let qtdCarrinho     = document.getElementById("qtdCarrinho");
+    let priceCarrinho   = document.getElementById("priceCarrinho");
+
+    qtdCarrinho.innerText = listShoppingCart.length;
+
+    auxPrice = 0;    
+    for(let i in listShoppingCart){
+        let dataIndex = listShoppingCart[i].querySelector("button").value;
+        console.log(listShoppingCart[i].querySelector("button").value);
+        auxPrice += data[dataIndex].value;
+    }
+    priceCarrinho.innerText = `R$ ${auxPrice.toFixed(2)}`
+
+
+    console.log(" Finalizou reloadSummaryShoppingCart")
+}
+
 function reloadListShoppingCart() {
     shoppingCart.innerText = "";
     for(let i in listShoppingCart){
@@ -55,7 +73,7 @@ function reloadListShoppingCart() {
         currentElement.id = i;
         shoppingCart.appendChild(currentElement); 
     }
-
+    reloadSummaryShoppingCart();
 }
 
 function removeShoppingCart(idCard, e){
@@ -63,18 +81,17 @@ function removeShoppingCart(idCard, e){
     
     // console.log(listShoppingCart[1].getElementsByClassName("bodyCardCarrinho")[0]);
     // listShoppingCart.splice(idCard, 1);
-    let aux = listShoppingCart;
-    console.log(aux.length);
-    for(let i = 0; i<aux.length; i++){
-        console.log(i);
-        console.log(aux.length);
-        console.log(listShoppingCart[i].getElementsByClassName("bodyCardCarrinho")[0]);
-        console.log(e.path[1]);        
+
+    for(let i in listShoppingCart){
+        // console.log(i);
+        // console.log(aux.length);
+        // console.log(listShoppingCart[i].getElementsByClassName("bodyCardCarrinho")[0]);
+        // console.log(e.path[1]);        
         if(listShoppingCart[i].getElementsByClassName("bodyCardCarrinho")[0]==e.path[1]){
-            console.log("verdade")
+            // console.log("verdade")
             listShoppingCart.splice(i, 1);  
         }
-        console.log("-------------------------------------")
+        // console.log("-------------------------------------")
     }
     // listShoppingCart = listShoppingCart.filter((_, index) => index !== Number(e.path[1].id))
     reloadListShoppingCart();
@@ -101,7 +118,7 @@ function addShoppingCart(idCard){
     h3BodyCardCarrinho.innerText = data[idCard].nameItem
     pBodyCardCarrinho.innerText = `R$ ${data[idCard].value.toFixed(2)}`
     buttonBodyCardCarrinho.innerText = "Remover do carrinho";
-    // buttonBodyCardCarrinho.value = listShoppingCart.length;
+    buttonBodyCardCarrinho.value = idCard;
 
     buttonBodyCardCarrinho.addEventListener("click", function(){
         removeShoppingCart(buttonBodyCardCarrinho.value, event);
