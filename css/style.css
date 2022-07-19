@@ -121,7 +121,7 @@ input{
     overflow-y: auto;
 }
 
-.cards{
+#cards{
     display: flex;
     gap: 22px 40px;
     flex-wrap: wrap;
