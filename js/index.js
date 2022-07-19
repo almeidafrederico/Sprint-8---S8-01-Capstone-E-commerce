@@ -1,49 +1,52 @@
-function createCards(){
+function reloadCards(tag){
     let cards = document.getElementById("cards");
+    cards.innerText = "";
     for(let i in data){
-        let card            = document.createElement("li");
-        card.classList.add("card");
+        if(tag==data[i].tag[0] || !tag){
+            let card            = document.createElement("li");
+            card.classList.add("card");
 
-        let divImg          = document.createElement("div");
-        divImg.classList.add("img");
-        let divBodyCard     = document.createElement("div");
-        divBodyCard.classList.add("bodyCard");
+            let divImg          = document.createElement("div");
+            divImg.classList.add("img");
+            let divBodyCard     = document.createElement("div");
+            divBodyCard.classList.add("bodyCard");
 
-        let img             = document.createElement("img");
-        img.src = data[i].img;
-        img.alt = data[i].nameItem;
-        divImg.appendChild(img);
+            let img             = document.createElement("img");
+            img.src = data[i].img;
+            img.alt = data[i].nameItem;
+            divImg.appendChild(img);
 
-        let pTagCard        = document.createElement("p");
-        let h3TitleCard     = document.createElement("h3");
-        let pDescCard       = document.createElement("p");
-        let pPriceCard      = document.createElement("p");
-        let addCarrinho     = document.createElement("button");
+            let pTagCard        = document.createElement("p");
+            let h3TitleCard     = document.createElement("h3");
+            let pDescCard       = document.createElement("p");
+            let pPriceCard      = document.createElement("p");
+            let addCarrinho     = document.createElement("button");
 
-        pTagCard.classList.add("tagCard");
-        h3TitleCard.classList.add("titleCard");
-        pDescCard.classList.add("descCard");
-        pPriceCard.classList.add("priceCard");
+            pTagCard.classList.add("tagCard");
+            h3TitleCard.classList.add("titleCard");
+            pDescCard.classList.add("descCard");
+            pPriceCard.classList.add("priceCard");
 
-        pTagCard.innerText = data[i].tag;
-        h3TitleCard.innerText = data[i].nameItem;
-        pDescCard.innerText = data[i].description;
-        pPriceCard.innerText = `R$ ${data[i].value.toFixed(2)}`;
-        addCarrinho.innerText = "Adicionar ao carrinho";
-        addCarrinho.value = i;
+            pTagCard.innerText = data[i].tag;
+            h3TitleCard.innerText = data[i].nameItem;
+            pDescCard.innerText = data[i].description;
+            pPriceCard.innerText = `R$ ${data[i].value.toFixed(2)}`;
+            addCarrinho.innerText = "Adicionar ao carrinho";
+            addCarrinho.value = i;
 
-        addCarrinho.addEventListener("click", function(){
-            addShoppingCart(addCarrinho.value);
-        });
+            addCarrinho.addEventListener("click", function(){
+                addShoppingCart(addCarrinho.value);
+            });
 
-        divBodyCard.append(pTagCard, h3TitleCard, pDescCard, pPriceCard, addCarrinho);
+            divBodyCard.append(pTagCard, h3TitleCard, pDescCard, pPriceCard, addCarrinho);
 
-        card.append(divImg, divBodyCard);
-        cards.appendChild(card);
+            card.append(divImg, divBodyCard);
+            cards.appendChild(card);
+        }
     }
 }
 
-createCards();
+reloadCards();
 
 let shoppingCart        = document.getElementById("shoppingCart");
 let listShoppingCart = [];
@@ -57,13 +60,9 @@ function reloadSummaryShoppingCart(){
     auxPrice = 0;    
     for(let i in listShoppingCart){
         let dataIndex = listShoppingCart[i].querySelector("button").value;
-        console.log(listShoppingCart[i].querySelector("button").value);
         auxPrice += data[dataIndex].value;
     }
     priceCarrinho.innerText = `R$ ${auxPrice.toFixed(2)}`
-
-
-    console.log(" Finalizou reloadSummaryShoppingCart")
 }
 
 function reloadListShoppingCart() {
@@ -130,3 +129,24 @@ function addShoppingCart(idCard){
     reloadListShoppingCart();
 }
 
+
+function addEventListenerNav (){
+    let todosSearch = document.getElementById("todosSearch");
+    let accesSearch = document.getElementById("accesSearch");
+    let shoesSearch = document.getElementById("shoesSearch");
+    let shirtSearch = document.getElementById("shirtSearch");
+
+    todosSearch.addEventListener("click", function(){
+        reloadCards();
+    });
+    accesSearch.addEventListener("click", function(){
+        reloadCards("Acessórios");
+    });
+    shoesSearch.addEventListener("click", function(){
+        reloadCards("Calçados");
+    });
+    shirtSearch.addEventListener("click", function(){
+        reloadCards("Camisetas");
+    });
+}
+addEventListenerNav();
