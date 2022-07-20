@@ -55,21 +55,59 @@ let shoppingCart        = document.getElementById("shoppingCart");
 let listShoppingCart = [];
 
 function reloadSummaryShoppingCart(){
-    let qtdCarrinho     = document.getElementById("qtdCarrinho");
-    let priceCarrinho   = document.getElementById("priceCarrinho");
 
-    qtdCarrinho.innerText = listShoppingCart.length;
+    let resumoCarrinhoDeCompras     = document.getElementById("resumoCarrinhoDeCompras");
+    resumoCarrinhoDeCompras.innerText = "";
+    if(!listShoppingCart.length){
+        resumoCarrinhoDeCompras.classList = "";
+    }else{
+        resumoCarrinhoDeCompras.classList = "resumoCarrinhoDeCompras";    
+        let div1                        = document.createElement("div");
+        let div2                        = document.createElement("div");
 
-    auxPrice = 0;    
-    for(let i in listShoppingCart){
-        let dataIndex = listShoppingCart[i].querySelector("button").value;
-        auxPrice += data[dataIndex].value;
+        h4Div1                          = document.createElement("h4");
+        h4Div1.innerText                = "Quantidade:";
+        pDiv1                           = document.createElement("p");
+        pDiv1.innerText                 = listShoppingCart.length;
+        pDiv1.id                      = "qtdCarrinho";
+        div1.append(h4Div1,pDiv1);
+
+        auxPrice = 0;    
+        for(let i in listShoppingCart){
+            let dataIndex = listShoppingCart[i].querySelector("button").value;
+            auxPrice += data[dataIndex].value;
+        }
+
+
+
+        h4Div2                          = document.createElement("h4");
+        h4Div2.innerText                = "Total:";
+        pDiv2                           = document.createElement("p");
+        pDiv2.id                        = "priceCarrinho";
+        pDiv2.innerText         = `R$ ${auxPrice.toFixed(2)}`
+        div2.append(h4Div2,pDiv2);
+
+        resumoCarrinhoDeCompras.append(div1,div2);
     }
-    priceCarrinho.innerText = `R$ ${auxPrice.toFixed(2)}`
+
+}
+
+function emptyShoppingCart(){
+    let livazio = document.createElement("li");
+    livazio.classList.add("emptyShoppingCart");
+    let h1vazio = document.createElement("h3");
+    let pvazio  = document.createElement("p"); 
+    h1vazio.innerText   = "Carrinho vázio"
+    pvazio.innerText    = "Adicione itens"
+    livazio.append(h1vazio, pvazio)
+    shoppingCart.appendChild(livazio)
 }
 
 function reloadListShoppingCart() {
     shoppingCart.innerText = "";
+    if(!listShoppingCart.length){
+        emptyShoppingCart();
+    }
     for(let i in listShoppingCart){
         let currentElement = listShoppingCart[i];
         currentElement.id = i;
@@ -78,24 +116,10 @@ function reloadListShoppingCart() {
     reloadSummaryShoppingCart();
 }
 
-function removeShoppingCart(idCard, e){
-    
-    
-    // console.log(listShoppingCart[1].getElementsByClassName("bodyCardCarrinho")[0]);
-    // listShoppingCart.splice(idCard, 1);
+reloadListShoppingCart();
 
-    for(let i in listShoppingCart){
-        // console.log(i);
-        // console.log(aux.length);
-        // console.log(listShoppingCart[i].getElementsByClassName("bodyCardCarrinho")[0]);
-        // console.log(e.path[1]);        
-        if(listShoppingCart[i].getElementsByClassName("bodyCardCarrinho")[0]==e.path[1]){
-            // console.log("verdade")
-            listShoppingCart.splice(i, 1);  
-        }
-        // console.log("-------------------------------------")
-    }
-    // listShoppingCart = listShoppingCart.filter((_, index) => index !== Number(e.path[1].id))
+function removeShoppingCart(idCard, e){
+    listShoppingCart = listShoppingCart.filter((product) => e.path[1] !== product.getElementsByClassName("bodyCardCarrinho")[0])
     reloadListShoppingCart();
 }
 
