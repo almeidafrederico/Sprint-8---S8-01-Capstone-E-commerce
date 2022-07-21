@@ -5,7 +5,9 @@ function reloadCards(tag, product){
         product = "";
     }
     for(let i in data){
-        if(tag===data[i].tag[0] || !tag || product.toLowerCase()===data[i].nameItem.toLowerCase()){
+        let spl = data[i].nameItem.split(" ");
+        let auxFilter = spl.filter((churros) => product.toLowerCase()==churros.toLowerCase())
+        if(tag===data[i].tag[0] || !tag || auxFilter[0]){
             let card            = document.createElement("li");
             card.classList.add("card");
 
@@ -77,8 +79,6 @@ function reloadSummaryShoppingCart(){
             let dataIndex = listShoppingCart[i].querySelector("button").value;
             auxPrice += data[dataIndex].value;
         }
-
-
 
         h4Div2                          = document.createElement("h4");
         h4Div2.innerText                = "Total:";
